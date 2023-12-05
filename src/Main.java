@@ -3,17 +3,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-   //A 2D array of the gameboard before any play has happened
-    private static final ArrayList<Integer> playedPos = new ArrayList<>();
+    private static final ArrayList<Integer> playedPos = new ArrayList<>(); //ArrayList that tracks what positions has been played
+
+    private static char playerSymbol = ' ';
+
+    //A 2D array of the gameboard before any play has happened
     public static char[][] gameBoard = new char[][]{
             {' ', '|', ' ', '|', ' '},
             {'-', '+', '-', '+', '-'},
             {' ', '|', ' ', '|', ' '},
             {'-', '+', '-', '+', '-'},
             {' ', '|', ' ', '|', ' '}};
-
-    public Main() {
-    }
 
     public static void main(String[] args) {
         int count = 1;      //A count to switch between players
@@ -24,18 +24,24 @@ public class Main {
             printGameBord(gameBoard);
             playerPos(count);
             ++count;
+            checkIfWon();
         }
         printGameBord(gameBoard);
     }
 
+    /**
+     * A method that switches between players and then places the according player symbol
+     * @param n this is the count which keeps track of who's turn it is
+     */
     private static void playerPos(int n) {
-        char playerSymbol = ' ';
+
         if (n % 2 == 0) {
             playerSymbol = 'O';
         } else if (n % 2 == 1) {
             playerSymbol = 'X';
         }
 
+        //Switch case that askes for player input and the places the according player symbol on the chosen slot
         switch (playerInput()) {
             case 1:
                 gameBoard[0][0] = playerSymbol;
@@ -67,6 +73,10 @@ public class Main {
 
     }
 
+    /**
+     * A method that takes the player input and checks if it is a valid input
+     * @returns the player input
+     */
     private static int playerInput() {
 
         Scanner in = new Scanner(System.in);
@@ -85,6 +95,9 @@ public class Main {
         }
     }
 
+    /**
+     * Method that prints the current gameboard
+     */
     private static void printGameBord(char[][] gameBoard) {
 
         for (char[] c : gameBoard) {
@@ -92,5 +105,28 @@ public class Main {
         }
 
     }
+
+    /**
+     * A method that check all win conditions and prints if someone won
+     */
+    private static void checkIfWon(){
+
+        for (int i = 0; i < 5; i+=2){
+
+            if(gameBoard[0][i] == playerSymbol && gameBoard[2][i] == playerSymbol && gameBoard[4][i] == playerSymbol){
+                System.out.println(playerSymbol + " You won");
+            }
+            if(gameBoard[i][0] == playerSymbol && gameBoard[i][2] == playerSymbol && gameBoard[i][4] == playerSymbol){
+                System.out.println(playerSymbol + " You won");
+            }
+        }
+        if(gameBoard[0][0] == playerSymbol && gameBoard[2][2] == playerSymbol && gameBoard[4][4] == playerSymbol){
+            System.out.println(playerSymbol + " You won");
+        }
+        if(gameBoard[0][4] == playerSymbol && gameBoard[2][2] == playerSymbol && gameBoard[4][0] == playerSymbol){
+            System.out.println(playerSymbol + " You won");
+        }
+    }
+
 }
 
