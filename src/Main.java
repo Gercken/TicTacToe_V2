@@ -9,8 +9,6 @@ public class Main {
             {' ', '|', ' ', '|', ' '},
             {'-', '+', '-', '+', '-'},
             {' ', '|', ' ', '|', ' '}};
-    public static ArrayList<Integer> player1Placement = new ArrayList();
-    public static ArrayList<Integer> player2Placement = new ArrayList();
 
     public Main() {
     }
@@ -27,8 +25,6 @@ public class Main {
     }
 
     private static void playerPos(int n) {
-        Scanner in = new Scanner(System.in);
-        int input = in.nextInt();
         char playerSymbol = 32;
         if (n % 2 == 0) {
             playerSymbol = 79;
@@ -36,7 +32,7 @@ public class Main {
             playerSymbol = 88;
         }
 
-        switch (input) {
+        switch (playerInput()) {
             case 1:
                 gameBoard[0][0] = playerSymbol;
                 break;
@@ -67,12 +63,22 @@ public class Main {
 
     }
 
-    private static void printGameBord(char[][] gameBoard) {
-        char[][] var1 = gameBoard;
-        int var2 = gameBoard.length;
+    private static int playerInput() {
 
-        for(int var3 = 0; var3 < var2; ++var3) {
-            char[] c = var1[var3];
+        Scanner in = new Scanner(System.in);
+        while (true){
+            int input = in.nextInt();
+            if(input > 0 && input < 10){
+                return input;
+            }else{
+                System.out.println("Please enter a number between 1 - 9.");
+            }
+        }
+    }
+
+    private static void printGameBord(char[][] gameBoard) {
+
+        for (char[] c : gameBoard) {
             System.out.println(c);
         }
 
